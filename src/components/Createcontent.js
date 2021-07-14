@@ -11,7 +11,7 @@ class CreateContent extends Component{
           e.preventDefault();
           this.props.onSubmit(
             e.target.title.value,
-            e.target.desc.value
+            e.target.desc.value,
           );
         }.bind(this)}>
           <p><input type = "text" name = "title" placeholder = "title"></input></p> {/* placeholder 은 빈칸에 나오는 글자 */}
