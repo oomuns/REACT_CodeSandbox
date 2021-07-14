@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 
 class UpdateContent extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      id : this.props.data.id,
+      title:this.props.data.title,
+      desc : this.props.data.desc
+    }
+    this.inputFormHandler = this.inputFormHandler.bind(this);
+  }
+  inputFormHandler(e){
+    this.setState({ [e.target.name] : e.target.value});
+  }
   render(){
     console.log(this.props.data);
     console.log('Update render');
@@ -11,13 +23,20 @@ class UpdateContent extends Component{
         onSubmit = {function(e){
           e.preventDefault();
           this.props.onSubmit(
-            e.target.title.value,
-            e.target.desc.value
+            this.state.id,
+            this.state.title,
+            this.state.desc
           );
         }.bind(this)}>
-          <p><input type = "text" name = "title" placeholder = "title"></input></p> {/* placeholder 은 빈칸에 나오는 글자 */}
+          <input type = "hidden" name ="id" value = {this.state.id}></input>
+
+          <p><input type = "text" name = "title" placeholder = "title" value = {this.props.data.title}
+          onChange = {this.inputFormHandler}></input></p> {/* placeholder 은 빈칸에 나오는 글자 */}
           <p>
-            <textarea name = "desc" placeholder = "description"></textarea>
+            <textarea 
+            onChange = {this.inputFormHandler}name = "desc"
+            placeholder = "description"
+            value = {this.state.desc}></textarea>
           </p>
           <p>
             <input type = "submit"></input>
