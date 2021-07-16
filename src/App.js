@@ -14,7 +14,7 @@ class App extends Component {
         //consructor 가 제일 먼저 실행 되면서 초기화를 담당한다.
         super(props);
         this.state = {
-            mode: "create",
+            mode: "welcome",
             selected_content_id: 2,
             subject: { title: "WEB2", sub: "World Wid Web!" },
             welcome: { title: "Welcome", desc: "Hello React!" },
@@ -103,9 +103,32 @@ getcontent(){
                     }.bind(this)}
                     data={this.state.contents}
                 ></TOC>
-                <Control onChangeMode = {function(mode){
+                <Control onChangeMode = {function(_mode){
+                    if(_mode === 'delete'){
+                        if(window.confirm('really?')){
+                            var _contents = Array.from(this.state.contents);
+                            var i = 0;
+                            while(i < this.state.contents.length){
+                                if(_contents[i].id === this.state.selected_content_id){
+                                    _contents.splice(i,1);
+                                    break;
+                                }
+                                
+                                i = i + 1;
+                            }
+                            this.setState({
+                                mode:'welcome',
+                                contents : _contents
+                            });
+                            alert('Deleted!');
+                        }
+                    }else{
+                        this.setState({
+                            mode : _mode
+                        });
+                    }
                     this.setState({
-                        mode : mode
+                        mode : _mode
                     });
                 }.bind(this)}></Control>
                 {this.getcontent()}
